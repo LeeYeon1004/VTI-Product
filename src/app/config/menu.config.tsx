@@ -18,5 +18,10 @@ export const menuConfig: {
       name: 'Users',
       icon: <FontAwesomeIcon icon={faUsers} />,
     },
+    {
+      url: '/products',
+      name: 'Products',
+      icon: <FontAwesomeIcon icon={faUsers} />,
+    },
   ],
 };
