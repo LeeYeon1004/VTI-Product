@@ -13,14 +13,13 @@ import {
 function TableTemplate() {
   return (
     <div>
-      {/* table */}
       <div className=" flex m-auto">
         <TableContainer>
           <Table>
             <TableHead>
               <TableRow>
                 <TableCell sx={{ fontSize: '15px', fontWeight: '600' }}>
-                  Index
+                  STT
                 </TableCell>
                 <TableCell sx={{ fontSize: '15px', fontWeight: '600' }}>
                   Name
@@ -42,15 +41,16 @@ function TableTemplate() {
             <TableBody>
               <TableRow>
                 <TableCell>1</TableCell>
-                <TableCell>1</TableCell>
-                <TableCell>2</TableCell>
-                <TableCell>3</TableCell>
-                <TableCell>4</TableCell>
+                <TableCell>Kim Woo Bin</TableCell>
+                <TableCell>buihuuloi2000@gmail.com</TableCell>
+                <TableCell>09/08/2022</TableCell>
+                <TableCell>0971083244</TableCell>
                 <TableCell>
                   <Button
                     variant="outlined"
                     size="small"
                     color="primary"
+                    sx={{ marginRight: '8px' }}
                     startIcon={<EditIcon />}
                   >
                     Edit

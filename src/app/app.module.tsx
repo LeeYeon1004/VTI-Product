@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import AppRouting from './app-routing';
 import { AppContext } from './app.context';
-import './app.style.scss';
 import LoaderComponent from './core/components/loading/loader.component';
 import ToastComponent from './shared/components/toast/toast.component';
 import { IToastData } from './models/app-context.model';

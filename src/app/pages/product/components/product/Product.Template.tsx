@@ -1,23 +1,14 @@
-import styled from '@emotion/styled';
 import { Button, TextField } from '@mui/material';
+import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { useState } from 'react';
 import ModalComponent from '../modal/Modal.Component';
-import TableComponent from './table/Table.Component';
+import SearchComponent from '../search/Search.Component';
+import TableComponent from '../table/Table.Component';
 
-const CssTextField = styled(TextField)({
-  '& .MuiInputBase-input': {
-    padding: '12px',
-  },
-  '& .css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline':
-    {
-      borderColor: '',
-    },
-  '& .MuiFormLabel-root': {
-    top: '-4px',
-  },
-});
 function ProductTemplate() {
   const [open, setOpen] = useState<boolean>(false);
+  const [value, setValue] = useState<Date | null>(null);
   const handleOpen = () => {
     setOpen(true);
   };
@@ -36,24 +27,38 @@ function ProductTemplate() {
             >
               Add
             </Button>
-          </div>
-          <div className="">
-            {/* search */}
-            <div className="my-[12px] flex justify-end">
-              <CssTextField
-                sx={{ width: '300px' }}
-                id="outlined-basic"
-                label="Search"
-                variant="outlined"
-              />
-              <Button
-                sx={{ marginLeft: '12px', backgroundColor: '#0d6efd' }}
-                variant="contained"
-              >
-                Search
-              </Button>
+            <div className="flex">
+              <div>
+                <LocalizationProvider dateAdapter={AdapterDateFns}>
+                  <DatePicker
+                    label="From"
+                    value={value}
+                    onChange={(newValue) => {
+                      setValue(newValue);
+                    }}
+                    renderInput={(params) => (
+                      <TextField size="small" {...params} />
+                    )}
+                  />
+                </LocalizationProvider>
+              </div>
+              <div>
+                <LocalizationProvider dateAdapter={AdapterDateFns}>
+                  <DatePicker
+                    label="To"
+                    value={value}
+                    onChange={(newValue) => {
+                      setValue(newValue);
+                    }}
+                    renderInput={(params) => (
+                      <TextField size="small" {...params} />
+                    )}
+                  />
+                </LocalizationProvider>
+              </div>
             </div>
           </div>
+          <SearchComponent />
         </div>
         <TableComponent />
         <ModalComponent handleClose={handleClose} open={open} />

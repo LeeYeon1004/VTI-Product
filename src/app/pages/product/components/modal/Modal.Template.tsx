@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Box, Modal, Typography, TextField } from '@mui/material';
+import { Box, Modal, Typography, TextField, Button } from '@mui/material';
 // import { useState } from 'react';
 
 const style = {
@@ -54,7 +54,6 @@ function ModalTemplate({ props, handleClose }: IProps) {
                 variant="outlined"
               />
             </div>
-
             {/* Email */}
             <div className="flex items-center mb-[12px]">
               <Typography
@@ -94,6 +93,25 @@ function ModalTemplate({ props, handleClose }: IProps) {
                 id="outlined-basic"
                 variant="outlined"
               />
+            </div>
+            {/* button */}
+            <div className="text-right">
+              <Button
+                className="w-[80px]"
+                onClick={handleClose}
+                variant="outlined"
+                color="error"
+              >
+                CANCEL
+              </Button>
+              <Button
+                className="w-[80px]"
+                sx={{ marginLeft: '12px' }}
+                variant="contained"
+                color="primary"
+              >
+                ADD
+              </Button>
             </div>
           </Box>
         </Modal>
