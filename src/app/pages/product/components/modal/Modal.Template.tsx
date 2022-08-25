@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { Box, Modal, Typography, TextField, Button } from '@mui/material';
-// import { useState } from 'react';
+import { useState } from 'react';
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -29,9 +29,43 @@ interface IProps {
   handleClose: () => void;
 }
 function ModalTemplate({ props, handleClose }: IProps) {
+  const [nameEvent, setNameEvent] = useState<string>('');
+  const [priceEvent, setPriceEvent] = useState<string>('');
+  const [mfgEvent, setMfgEvent] = useState<string>('');
+  const [brandEvent, setBrandEvent] = useState<string>('');
+  const [productItem, setProductItem] = useState<any>();
+
+  const handleAdd = () => {
+    setProductItem({
+      name: nameEvent,
+      price: priceEvent,
+      mfg: mfgEvent,
+      brand: brandEvent,
+    });
+    handleClose();
+  };
+  const handlePostItem = async () => {
+    // await HttpService.post('product/create', productItem);
+    console.log(productItem);
+  };
+  console.log(productItem);
+  const handleClick = () => {
+    handleAdd();
+    handlePostItem();
+    // setNameEvent('');
+    // setPriceEvent('');
+    // setMfgEvent('');
+    // setBrandEvent('');
+  };
+  // fix lại handlekey
+  const handleKey = (e: { key: string }) => {
+    if (e.key === 'Enter') {
+      handleAdd();
+      handleClose();
+    }
+  };
   return (
     <div>
-      {/* modal */}
       <div>
         <Modal
           open={props}
@@ -52,46 +86,55 @@ function ModalTemplate({ props, handleClose }: IProps) {
                 sx={{ flex: '1' }}
                 id="outlined-basic"
                 variant="outlined"
+                value={nameEvent}
+                onChange={(e) => setNameEvent(e.target.value)}
               />
             </div>
-            {/* Email */}
+            {/* Price */}
             <div className="flex items-center mb-[12px]">
               <Typography
                 sx={{ width: '68px', marginRight: '12px', fontSize: '16px' }}
               >
-                Email
+                Price
               </Typography>
               <CssTextField
                 sx={{ flex: '1' }}
                 id="outlined-basic"
                 variant="outlined"
+                value={priceEvent}
+                onChange={(e) => setPriceEvent(e.target.value)}
               />
             </div>
-            {/* Start */}
+            {/* Mfg.Date */}
             <div className="flex items-center mb-[12px]">
               <Typography
                 sx={{ width: '68px', marginRight: '12px', fontSize: '16px' }}
               >
-                Start
+                Mfg.Date
               </Typography>
               <CssTextField
                 type="date"
                 sx={{ flex: '1' }}
                 id="outlined-basic"
                 variant="outlined"
+                value={mfgEvent}
+                onChange={(e) => setMfgEvent(e.target.value)}
               />
             </div>
-            {/* Contact */}
+            {/* Brand */}
             <div className="flex items-center mb-[12px]">
               <Typography
                 sx={{ width: '68px', marginRight: '12px', fontSize: '16px' }}
               >
-                Contact
+                Brand
               </Typography>
               <CssTextField
                 sx={{ flex: '1' }}
                 id="outlined-basic"
                 variant="outlined"
+                onKeyDown={handleKey}
+                value={brandEvent}
+                onChange={(e) => setBrandEvent(e.target.value)}
               />
             </div>
             {/* button */}
@@ -109,6 +152,7 @@ function ModalTemplate({ props, handleClose }: IProps) {
                 sx={{ marginLeft: '12px' }}
                 variant="contained"
                 color="primary"
+                onClick={handleClick}
               >
                 ADD
               </Button>

@@ -17,7 +17,7 @@ function SearchTemplate() {
   return (
     <div className="">
       {/* search */}
-      <div className="my-[12px] flex justify-end">
+      <div className="my-[12px] flex">
         <CssTextField
           sx={{ width: '300px' }}
           id="outlined-basic"
@@ -25,7 +25,7 @@ function SearchTemplate() {
           variant="outlined"
         />
         <Button
-          sx={{ marginLeft: '12px', backgroundColor: '#0d6efd' }}
+          sx={{ marginLeft: '8px', backgroundColor: '#0d6efd' }}
           variant="contained"
         >
           Search
