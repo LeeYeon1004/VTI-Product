@@ -2,6 +2,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import {
   Button,
+  Pagination,
   Table,
   TableBody,
   TableCell,
@@ -71,6 +72,9 @@ function TableTemplate({ listData }: { listData: Product[] }) {
             </TableBody>
           </Table>
         </TableContainer>
+      </div>
+      <div className="float-right">
+        <Pagination count={10} color="primary" />
       </div>
     </div>
   );

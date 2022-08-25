@@ -13,7 +13,6 @@ function TableComponent() {
     const getList = await HttpService.get('product/list');
     setListData(getList.data.data);
   };
-
   return (
     <div>
       <TableTemplate listData={listData} />
