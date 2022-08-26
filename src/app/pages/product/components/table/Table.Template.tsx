@@ -10,9 +10,15 @@ import {
   TableHead,
   TableRow,
 } from '@mui/material';
-import { Product } from '../../services/Interface';
+import { Product } from '../../models/product.interface';
 
-function TableTemplate({ listData }: { listData: Product[] }) {
+function TableTemplate({
+  listData,
+  handleRemove,
+}: {
+  listData: Product[];
+  handleRemove: () => void;
+}) {
   return (
     <div>
       <div className=" flex m-auto">
@@ -63,6 +69,7 @@ function TableTemplate({ listData }: { listData: Product[] }) {
                       size="small"
                       color="error"
                       startIcon={<DeleteIcon />}
+                      onClick={handleRemove}
                     >
                       Remove
                     </Button>
@@ -73,7 +80,7 @@ function TableTemplate({ listData }: { listData: Product[] }) {
           </Table>
         </TableContainer>
       </div>
-      <div className="float-right">
+      <div className="float-right mt-[16px]">
         <Pagination count={10} color="primary" />
       </div>
     </div>

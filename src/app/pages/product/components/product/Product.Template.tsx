@@ -1,6 +1,6 @@
 import { Button } from '@mui/material';
-import { createContext } from 'react';
-import { Product, Props } from '../../services/Interface';
+import { createContext, useEffect, useState } from 'react';
+import { Product, Props } from '../../models/product.interface';
 import DatePickerF from '../date-picker/Date.Picker';
 import ModalComponent from '../modal/Modal.Component';
 import SearchComponent from '../search/Search.Component';
@@ -8,6 +8,15 @@ import TableComponent from '../table/Table.Component';
 
 export const AddContext = createContext<Product[]>([]);
 function ProductTemplate({ handleOpen, handleClose, item, open }: Props) {
+  const [check, setCheck] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (check === true) {
+    }
+  }, [check]);
+  const callFunc = (mes: boolean) => {
+    setCheck(mes);
+  };
   return (
     <AddContext.Provider value={item}>
       <div className="">
@@ -26,7 +35,11 @@ function ProductTemplate({ handleOpen, handleClose, item, open }: Props) {
             <DatePickerF />
           </div>
           <TableComponent />
-          <ModalComponent handleClose={handleClose} open={open} />
+          <ModalComponent
+            callFunc={callFunc}
+            handleClose={handleClose}
+            open={open}
+          />
         </div>
       </div>
     </AddContext.Provider>

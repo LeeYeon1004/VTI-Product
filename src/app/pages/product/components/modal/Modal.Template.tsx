@@ -1,27 +1,24 @@
 import { Modal, Typography, TextField, Button } from '@mui/material';
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { Dayjs } from 'dayjs';
 import { useState } from 'react';
+import { HttpService } from '../../../../shared/services/http.service';
 import ButtonProgress from '../button-progress/Button.Progress';
 
 interface IProps {
   props: boolean;
   handleClose: () => void;
+  callFunc: (data: boolean) => void;
 }
 function ModalTemplate({ props, handleClose }: IProps) {
   const [nameEvent, setNameEvent] = useState<string>('');
   const [priceEvent, setPriceEvent] = useState<string>('');
-  const [mfgEvent, setMfgEvent] = useState<any>();
+  const [mfgEvent, setMfgEvent] = useState<Dayjs | null>();
   const [brandEvent, setBrandEvent] = useState<string>('');
 
   const handlePostItem = async () => {
-    // await HttpService.post('product/create', {
-    //   name: nameEvent,
-    //   price: priceEvent,
-    //   mfg: mfgEvent,
-    //   brand: brandEvent,
-    // });
-    console.log({
+    await HttpService.post('product/create', {
       name: nameEvent,
       price: priceEvent,
       mfg: mfgEvent,
@@ -34,17 +31,20 @@ function ModalTemplate({ props, handleClose }: IProps) {
       handleClose();
       setNameEvent('');
       setPriceEvent('');
-      setMfgEvent('');
+      setMfgEvent(null);
       setBrandEvent('');
     }, 2000);
     return () => clearTimeout(handleTimeout);
   };
   // fix lại handlekey
-  const handleKey = (e: { key: string }) => {
+  const handleKey = (e: React.KeyboardEvent<HTMLElement>) => {
     if (e.key === 'Enter') {
-      handlePostItem();
-      handleClose();
+      handleClick();
     }
+  };
+  // get date picker
+  const handlePicker = (e: Dayjs | null) => {
+    setMfgEvent(e);
   };
   return (
     <Modal
@@ -54,7 +54,7 @@ function ModalTemplate({ props, handleClose }: IProps) {
       aria-describedby="modal-modal-description"
       sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
     >
-      <div className="bg-[#fff] m-auto flex flex-col max-w-[500px]">
+      <div className="bg-[#fff] m-auto flex flex-col max-w-[500px] p-[24px] rounded-[4px] shadow-xl">
         {/* name */}
         <div className="flex items-center mb-[12px]">
           <Typography
@@ -99,7 +99,7 @@ function ModalTemplate({ props, handleClose }: IProps) {
             <LocalizationProvider dateAdapter={AdapterDateFns}>
               <DatePicker
                 value={mfgEvent}
-                onChange={(e) => setMfgEvent(e.target.value)}
+                onChange={handlePicker}
                 renderInput={(params) => <TextField size="small" {...params} />}
               />
             </LocalizationProvider>
@@ -117,7 +117,7 @@ function ModalTemplate({ props, handleClose }: IProps) {
             sx={{ flex: '1' }}
             id="outlined-basic"
             variant="outlined"
-            onKeyDown={handleKey}
+            onKeyPress={handleKey}
             value={brandEvent}
             onChange={(e) => setBrandEvent(e.target.value)}
           />
@@ -132,7 +132,7 @@ function ModalTemplate({ props, handleClose }: IProps) {
           >
             CANCEL
           </Button>
-          <div className="w-[80px]">
+          <div className="mr-[-8px]">
             <ButtonProgress handleOnClick={handleClick} />
           </div>
         </div>

@@ -3,16 +3,17 @@ import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { useState } from 'react';
 function DatePickerF() {
-  const [value, setValue] = useState<Date | null>(null);
+  const [fromValue, setFromValue] = useState<Date | null>(null);
+  const [toValue, setToValue] = useState<Date | null>(null);
   return (
     <div className="flex mt-[12px]">
       <div className="mr-[8px]">
         <LocalizationProvider dateAdapter={AdapterDateFns}>
           <DatePicker
             label="From"
-            value={value}
+            value={fromValue}
             onChange={(newValue) => {
-              setValue(newValue);
+              setFromValue(newValue);
             }}
             renderInput={(params) => <TextField size="small" {...params} />}
           />
@@ -22,9 +23,9 @@ function DatePickerF() {
         <LocalizationProvider dateAdapter={AdapterDateFns}>
           <DatePicker
             label="To"
-            value={value}
+            value={toValue}
             onChange={(newValue) => {
-              setValue(newValue);
+              setToValue(newValue);
             }}
             renderInput={(params) => <TextField size="small" {...params} />}
           />

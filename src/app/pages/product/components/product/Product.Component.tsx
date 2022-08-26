@@ -1,11 +1,12 @@
 import ProductTemplate from './Product.Template';
 import { createContext, useState } from 'react';
-import { Product } from '../../services/Interface';
+import { Product } from '../../models/product.interface';
 
 export const AddContext = createContext<Product[]>([]);
 function ProductComponent() {
   const [open, setOpen] = useState<boolean>(false);
   const [item, setItem] = useState<any>([]);
+
   const handleOpen = () => {
     setOpen(true);
   };
@@ -15,6 +16,7 @@ function ProductComponent() {
   const callItem = (item: any) => {
     setItem(item);
   };
+
   return (
     <div>
       <ProductTemplate

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { HttpService } from '../../../../shared/services/http.service';
-import { Product } from '../../services/Interface';
+import { Product } from '../../models/product.interface';
 import TableTemplate from './Table.Template';
 
 function TableComponent() {
@@ -13,9 +13,13 @@ function TableComponent() {
     const getList = await HttpService.get('product/list');
     setListData(getList.data.data);
   };
+  const handleRemove = async () => {
+    // await HttpService.delete('product/delete');
+    console.log('delete');
+  };
   return (
     <div>
-      <TableTemplate listData={listData} />
+      <TableTemplate handleRemove={handleRemove} listData={listData} />
     </div>
   );
 }

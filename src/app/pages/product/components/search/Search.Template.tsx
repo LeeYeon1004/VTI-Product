@@ -1,32 +1,32 @@
-import styled from '@emotion/styled';
 import { Button, TextField } from '@mui/material';
+import { useState } from 'react';
+import { Product } from '../../models/product.interface';
 
-const CssTextField = styled(TextField)({
-  '& .MuiInputBase-input': {
-    padding: '12px',
-  },
-  '& .css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline':
-    {
-      borderColor: '',
-    },
-  '& .MuiFormLabel-root': {
-    top: '-4px',
-  },
-});
-function SearchTemplate() {
+function SearchTemplate({
+  handleSearch,
+  newList,
+}: {
+  handleSearch: (data: string) => void;
+  newList: Product[];
+}) {
+  const [value, setValue] = useState<string>('');
+  console.log(newList);
   return (
     <div className="">
-      {/* search */}
       <div className="my-[12px] flex">
-        <CssTextField
+        <TextField
           sx={{ width: '300px' }}
+          size="small"
           id="outlined-basic"
           label="Search"
           variant="outlined"
+          value={value}
+          onChange={(e) => setValue(e.target.value)}
         />
         <Button
           sx={{ marginLeft: '8px', backgroundColor: '#0d6efd' }}
           variant="contained"
+          onClick={() => handleSearch(value)}
         >
           Search
         </Button>

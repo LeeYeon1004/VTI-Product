@@ -3,11 +3,16 @@ import ModalTemplate from './Modal.Template';
 interface Props {
   open: boolean;
   handleClose: () => void;
+  callFunc: (data: boolean) => void;
 }
-function ModalComponent({ open, handleClose }: Props) {
+function ModalComponent({ open, handleClose, callFunc }: Props) {
   return (
     <div>
-      <ModalTemplate props={open} handleClose={handleClose} />
+      <ModalTemplate
+        callFunc={callFunc}
+        props={open}
+        handleClose={handleClose}
+      />
     </div>
   );
 }
