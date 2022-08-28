@@ -33,7 +33,6 @@ function ButtonProgress({ handleOnClick }: { handleOnClick: () => void }) {
       }, 2000);
     }
   };
-
   return (
     <Box sx={{ display: 'flex', alignItems: 'center' }}>
       <Box sx={{ m: 1, position: 'relative' }}>

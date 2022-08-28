@@ -1,17 +1,23 @@
+import { IModal } from '../../models/modal.interface';
 import ModalTemplate from './Modal.Template';
 
-interface Props {
-  open: boolean;
-  handleClose: () => void;
-  callFunc: (data: boolean) => void;
-}
-function ModalComponent({ open, handleClose, callFunc }: Props) {
+function ModalComponent({
+  open,
+  handleClose,
+  handlePostItem,
+  sendItem,
+  check,
+  handleEdit,
+}: IModal) {
   return (
     <div>
       <ModalTemplate
-        callFunc={callFunc}
-        props={open}
+        open={open}
         handleClose={handleClose}
+        handlePostItem={handlePostItem}
+        sendItem={sendItem}
+        check={check}
+        handleEdit={handleEdit}
       />
     </div>
   );

@@ -1,25 +1,22 @@
-import { useEffect, useState } from 'react';
-import { HttpService } from '../../../../shared/services/http.service';
-import { Product } from '../../models/product.interface';
+import { ITables } from '../../models/table.interface';
 import TableTemplate from './Table.Template';
 
-function TableComponent() {
-  const [listData, setListData] = useState<Product[]>([]);
-
-  useEffect(() => {
-    handleGetList();
-  }, []);
-  const handleGetList = async () => {
-    const getList = await HttpService.get('product/list');
-    setListData(getList.data.data);
-  };
-  const handleRemove = async () => {
-    // await HttpService.delete('product/delete');
-    console.log('delete');
-  };
+function TableComponent({
+  listData,
+  handleRemove,
+  getItem,
+  handleOpen,
+  checkEdit,
+}: ITables) {
   return (
     <div>
-      <TableTemplate handleRemove={handleRemove} listData={listData} />
+      <TableTemplate
+        getItem={getItem}
+        handleRemove={handleRemove}
+        listData={listData}
+        handleOpen={handleOpen}
+        checkEdit={checkEdit}
+      />
     </div>
   );
 }

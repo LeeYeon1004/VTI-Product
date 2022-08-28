@@ -2,40 +2,71 @@ import { Modal, Typography, TextField, Button } from '@mui/material';
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { Dayjs } from 'dayjs';
-import { useState } from 'react';
-import { HttpService } from '../../../../shared/services/http.service';
+import { useEffect, useState } from 'react';
+import { IModal } from '../../models/modal.interface';
+// import { HttpService } from '../../../../shared/services/http.service';
 import ButtonProgress from '../button-progress/Button.Progress';
 
-interface IProps {
-  props: boolean;
-  handleClose: () => void;
-  callFunc: (data: boolean) => void;
-}
-function ModalTemplate({ props, handleClose }: IProps) {
+function ModalTemplate({
+  open,
+  handleClose,
+  handlePostItem,
+  sendItem,
+  check,
+  handleEdit,
+}: IModal) {
   const [nameEvent, setNameEvent] = useState<string>('');
-  const [priceEvent, setPriceEvent] = useState<string>('');
+  const [priceEvent, setPriceEvent] = useState<number>(0);
   const [mfgEvent, setMfgEvent] = useState<Dayjs | null>();
   const [brandEvent, setBrandEvent] = useState<string>('');
-
-  const handlePostItem = async () => {
-    await HttpService.post('product/create', {
+  // edit put
+  useEffect(() => {
+    if (sendItem) {
+      setNameEvent(sendItem.name);
+      setPriceEvent(sendItem.price);
+      setMfgEvent(sendItem.mfg as unknown as Dayjs | null);
+      setBrandEvent(sendItem.brand);
+    }
+  }, [sendItem]);
+  const handlePut = () => {
+    const objectItem = {
       name: nameEvent,
       price: priceEvent,
-      mfg: mfgEvent,
+      mfg: mfgEvent + '',
       brand: brandEvent,
-    });
+    };
+    handleEdit(objectItem);
+  };
+  // -------------------
+  // add
+  const handlePost = () => {
+    const objectItem = {
+      name: nameEvent,
+      price: priceEvent,
+      mfg: mfgEvent + '',
+      brand: brandEvent,
+    };
+    handlePostItem(objectItem);
+  };
+  const handleCheck = () => {
+    if (check === true) {
+      handlePut();
+    } else {
+      handlePost();
+    }
   };
   const handleClick = () => {
     const handleTimeout = setTimeout(() => {
-      handlePostItem();
+      handleCheck();
       handleClose();
       setNameEvent('');
-      setPriceEvent('');
+      setPriceEvent(0);
       setMfgEvent(null);
       setBrandEvent('');
     }, 2000);
     return () => clearTimeout(handleTimeout);
   };
+  // -------------------
   // fix lại handlekey
   const handleKey = (e: React.KeyboardEvent<HTMLElement>) => {
     if (e.key === 'Enter') {
@@ -48,7 +79,7 @@ function ModalTemplate({ props, handleClose }: IProps) {
   };
   return (
     <Modal
-      open={props}
+      open={open}
       onClose={handleClose}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
@@ -85,7 +116,7 @@ function ModalTemplate({ props, handleClose }: IProps) {
             id="outlined-basic"
             variant="outlined"
             value={priceEvent}
-            onChange={(e) => setPriceEvent(e.target.value)}
+            onChange={(e) => setPriceEvent(+e.target.value)}
           />
         </div>
         {/* Mfg.Date */}
