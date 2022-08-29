@@ -1,12 +1,12 @@
 import { Modal, Typography, TextField, Button } from '@mui/material';
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-// import { Dayjs } from 'dayjs';
+import { Dayjs } from 'dayjs';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { IModal } from '../../models/modal.interface';
-import { Dayjs } from 'dayjs';
+import ButtonProgress from '../button-progress/button.progress';
 
 function ModalTemplate({
   open,
@@ -16,54 +16,54 @@ function ModalTemplate({
   check,
   handleEdit,
 }: IModal) {
-  // const [nameEvent, setNameEvent] = useState<string>('');
-  // const [priceEvent, setPriceEvent] = useState<number>(0);
-  // const [mfgEvent, setMfgEvent] = useState<Dayjs | null>();
-  // const [brandEvent, setBrandEvent] = useState<string>('');
+  const [nameEvent, setNameEvent] = useState<string>('');
+  const [priceEvent, setPriceEvent] = useState<number>(0);
+  const [mfgEvent, setMfgEvent] = useState<Dayjs | null>();
+  const [brandEvent, setBrandEvent] = useState<string>('');
   // put
   useEffect(() => {
     if (sendItem) {
-      // setNameEvent(sendItem.name);
-      // setPriceEvent(sendItem.price);
-      // setMfgEvent(sendItem.mfg as unknown as Dayjs | null);
-      // setBrandEvent(sendItem.brand);
+      setNameEvent(sendItem.name);
+      setPriceEvent(sendItem.price);
+      setMfgEvent(sendItem.mfg as unknown as Dayjs | null);
+      setBrandEvent(sendItem.brand);
     }
   }, [sendItem]);
-  // const handlePut = () => {
-  // const objectItem = {
-  // name: nameEvent,
-  // price: priceEvent,
-  // mfg: mfgEvent + '',
-  // brand: brandEvent,
-  //   };
-  //   handleEdit(objectItem);
-  // };
+  const handlePut = () => {
+    const objectItem = {
+      name: nameEvent,
+      price: priceEvent,
+      mfg: mfgEvent + '',
+      brand: brandEvent,
+    };
+    handleEdit(objectItem);
+  };
   // -------------------
   // add
-  // const handlePost = () => {
-  //   const objectItem = {
-  // name: nameEvent,
-  // price: priceEvent,
-  // mfg: mfgEvent + '',
-  // brand: brandEvent,
-  //   };
-  //   handlePostItem(objectItem);
-  // };
-  // const handleCheck = () => {
-  //   if (check === true) {
-  //     handlePut();
-  //   } else {
-  //     handlePost();
-  //   }
-  // };
+  const handlePost = () => {
+    const objectItem = {
+      name: nameEvent,
+      price: priceEvent,
+      mfg: mfgEvent + '',
+      brand: brandEvent,
+    };
+    handlePostItem(objectItem);
+  };
+  const handleCheck = () => {
+    if (check === true) {
+      handlePut();
+    } else {
+      handlePost();
+    }
+  };
   const handleClick = () => {
     const handleTimeout = setTimeout(() => {
-      // handleCheck();
+      handleCheck();
       handleClose();
-      // setNameEvent('');
-      // setPriceEvent(0);
-      // setMfgEvent(null);
-      // setBrandEvent('');
+      setNameEvent('');
+      setPriceEvent(0);
+      setMfgEvent(null);
+      setBrandEvent('');
     }, 2000);
     return () => clearTimeout(handleTimeout);
   };
@@ -75,42 +75,32 @@ function ModalTemplate({
     }
   };
   // get date picker
-  // const handlePicker = (e: Dayjs | null) => {
-  //   setMfgEvent(e);
-  // };
+  const handlePicker = (e: Dayjs | null) => {
+    setMfgEvent(e);
+  };
   // formik
   const formik = useFormik({
     initialValues: {
-      name: check ? sendItem?.name : '',
-      price: check ? sendItem?.price : 0,
-      mfg: check ? sendItem?.mfg : '',
-      brand: check ? sendItem?.brand : '',
+      name: '',
+      // price: 0,
+      // mfg: '',
+      // brand: '',
     },
     validationSchema: Yup.object({
       name: Yup.string()
         .min(2, 'Mininum 2 characters')
         .max(15, 'Maximum 15 characters')
         .required('Required!'),
-      price: Yup.number().required('Required!'),
-      mfg: Yup.date().required('Required!'),
-      brand: Yup.string().required('Required!'),
+      // price: Yup.number().required('Required!'),
+      // mfg: Yup.string().required('Required!'),
+      // brand: Yup.string().required('Required!'),
     }),
     onSubmit: (values) => {
       console.log(values);
-      const objectItem = {
-        name: values.name,
-        price: values.price,
-        mfg: values.mfg + '',
-        brand: values.brand,
-      };
-      if (check === true) {
-        handleEdit(objectItem);
-      } else {
-        handlePostItem(objectItem);
-      }
     },
   });
   // ------------------
+
   return (
     <Modal
       open={open}
@@ -140,7 +130,7 @@ function ModalTemplate({
             name="name"
             value={formik.values.name}
             onChange={formik.handleChange}
-          />
+          ></TextField>
           {formik.errors.name && formik.touched.name && (
             <p>{formik.errors.name}</p>
           )}
@@ -157,14 +147,9 @@ function ModalTemplate({
             sx={{ flex: '1' }}
             id="outlined-basic"
             variant="outlined"
-            type="number"
-            name="price"
-            value={formik.values.price}
-            onChange={formik.handleChange}
+            value={priceEvent}
+            onChange={(e) => setPriceEvent(+e.target.value)}
           />
-          {formik.errors.price && formik.touched.price && (
-            <p>{formik.errors.price}</p>
-          )}
         </div>
         {/* Mfg.Date */}
         <div className="flex items-center mb-[12px]">
@@ -176,16 +161,10 @@ function ModalTemplate({
           <div className="flex-1">
             <LocalizationProvider dateAdapter={AdapterDateFns}>
               <DatePicker
-                renderInput={(params) => (
-                  <TextField size="small" {...params} name="mfg" />
-                )}
-                value={formik.values.mfg as unknown as Dayjs}
-                // onChange={formik.handleChange}
-                onChange={(value) => formik.setFieldValue('mfg', value, true)}
+                value={mfgEvent}
+                onChange={handlePicker}
+                renderInput={(params) => <TextField size="small" {...params} />}
               />
-              {formik.errors.mfg && formik.touched.mfg && (
-                <p>{formik.errors.mfg}</p>
-              )}
             </LocalizationProvider>
           </div>
         </div>
@@ -202,31 +181,26 @@ function ModalTemplate({
             id="outlined-basic"
             variant="outlined"
             onKeyPress={handleKey}
-            type="text"
-            name="brand"
-            value={formik.values.brand}
-            onChange={formik.handleChange}
+            value={brandEvent}
+            onChange={(e) => setBrandEvent(e.target.value)}
           />
-          {formik.errors.brand && formik.touched.brand && (
-            <p>{formik.errors.brand}</p>
-          )}
         </div>
         {/* button */}
         <div className="flex justify-end h-[36px] items-center">
-          <Button
+          {/* <Button
             className="w-[80px]"
             onClick={handleClose}
             variant="outlined"
             color="error"
           >
             CANCEL
-          </Button>
+          </Button> */}
           <div className="mr-[-8px]">
-            <button className="p-[12px]" type="submit">
-              sub
-            </button>
+            {/* <ButtonProgress handleOnClick={handleClick} /> */}
+            <button type="submit">Submit</button>
           </div>
         </div>
+        {/* <button type="submit">Submit</button> */}
       </form>
     </Modal>
   );

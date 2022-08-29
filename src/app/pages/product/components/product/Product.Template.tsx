@@ -39,7 +39,7 @@ function ProductTemplate({
   };
   const handleSearch = () => {
     setNewList(
-      newList.filter((item) => item.name.toLowerCase().includes(valueSearch)),
+      newList.filter((item) => item.name?.toLowerCase().includes(valueSearch)),
     );
   };
   // const getPrice = () => {

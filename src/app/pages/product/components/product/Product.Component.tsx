@@ -15,20 +15,20 @@ function ProductComponent() {
   }, []);
   const handleGetList = async () => {
     const getList = await HttpService.get('product/list');
-    setListData(getList.data.data);
-    // setListData(getList.data);
+    // setListData(getList.data.data);
+    setListData(getList.data);
   };
   // ---------
   //  post
   const handlePostItem = async (item: Product) => {
-    await HttpService.post('product/create', item);
-    // await HttpService.post('product/list', item);
+    // await HttpService.post('product/create', item);
+    await HttpService.post('product/list', item);
     await handleGetList();
   };
   // ----------
   // delete
   const handleRemove = async (id: number | undefined) => {
-    await HttpService.delete(`product/delete/${id}`);
+    await HttpService.delete(`product/list/${id}`);
     await handleGetList();
   };
   // ----------------
@@ -38,7 +38,7 @@ function ProductComponent() {
   };
 
   const handleEdit = async (item: Product) => {
-    await HttpService.put(`product/edit/${sendItem?.id}`, item);
+    await HttpService.put(`product/list/${sendItem?.id}`, item);
     await handleGetList();
   };
   const checkEdit = () => {

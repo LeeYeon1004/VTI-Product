@@ -37,6 +37,7 @@ function ButtonProgress({ handleOnClick }: { handleOnClick: () => void }) {
     <Box sx={{ display: 'flex', alignItems: 'center' }}>
       <Box sx={{ m: 1, position: 'relative' }}>
         <Button
+          type="submit"
           variant="contained"
           sx={buttonSx}
           disabled={loading}
