@@ -4,8 +4,7 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { Dayjs } from 'dayjs';
 import { useEffect, useState } from 'react';
 import { IModal } from '../../models/modal.interface';
-// import { HttpService } from '../../../../shared/services/http.service';
-import ButtonProgress from '../button-progress/Button.Progress';
+import ButtonProgress from '../button-progress/button.progress';
 
 function ModalTemplate({
   open,
@@ -19,7 +18,7 @@ function ModalTemplate({
   const [priceEvent, setPriceEvent] = useState<number>(0);
   const [mfgEvent, setMfgEvent] = useState<Dayjs | null>();
   const [brandEvent, setBrandEvent] = useState<string>('');
-  // edit put
+  // put
   useEffect(() => {
     if (sendItem) {
       setNameEvent(sendItem.name);
@@ -68,7 +67,7 @@ function ModalTemplate({
   };
   // -------------------
   // fix lại handlekey
-  const handleKey = (e: React.KeyboardEvent<HTMLElement>) => {
+  const handleKey = (e: { key: string }) => {
     if (e.key === 'Enter') {
       handleClick();
     }

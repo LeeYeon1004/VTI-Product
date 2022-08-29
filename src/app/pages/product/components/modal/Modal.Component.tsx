@@ -1,5 +1,5 @@
 import { IModal } from '../../models/modal.interface';
-import ModalTemplate from './Modal.Template';
+import ModalTemplate from './modal.template';
 
 function ModalComponent({
   open,

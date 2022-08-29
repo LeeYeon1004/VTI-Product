@@ -1,9 +1,10 @@
 import { Button } from '@mui/material';
+import { useEffect, useState } from 'react';
 import { Props } from '../../models/product.interface';
-import DatePickerF from '../date-picker/Date.Picker';
-import ModalComponent from '../modal/Modal.Component';
-import SearchComponent from '../search/Search.Component';
-import TableComponent from '../table/Table.Component';
+import DatePickerF from '../date-picker/date.picker';
+import ModalComponent from '../modal/modal.component';
+import SearchComponent from '../search/search.component';
+import TableComponent from '../table/table.component';
 
 function ProductTemplate({
   handleOpen,
@@ -19,12 +20,38 @@ function ProductTemplate({
   check,
   handleEdit,
 }: Props) {
+  const [valueSearch, setValueSearch] = useState<string>('');
+  const getValue = (value: string) => {
+    setValueSearch(value);
+  };
+  const [newList, setNewList] = useState(listData.slice(0, 5));
+  const [numberPage, setNumberPage] = useState(1);
+  useEffect(() => {
+    const lim = 5;
+    if (numberPage === 1) {
+      setNewList(listData.slice(0, 5));
+    } else {
+      setNewList(listData.slice(numberPage + 1, numberPage + 1 + lim));
+    }
+  }, [listData, numberPage]);
+  const getPage = (page: number) => {
+    setNumberPage(page);
+  };
+  const handleSearch = () => {
+    setNewList(
+      newList.filter((item) => item.name.toLowerCase().includes(valueSearch)),
+    );
+  };
+  // const getPrice = () => {
+  //   newList.sort((a, b) => b.price - a.price);
+  // };
+  // getPrice();
   return (
     <div className="">
       <div className="max-w-[1200px] m-auto">
         <div className="flex justify-start">
           <div className="flex-1">
-            <SearchComponent />
+            <SearchComponent handleSearch={handleSearch} getValue={getValue} />
             <Button
               onClick={() => {
                 handleOpen();
@@ -41,9 +68,10 @@ function ProductTemplate({
         <TableComponent
           getItem={getItem}
           handleRemove={handleRemove}
-          listData={listData}
           handleOpen={handleOpen}
           checkEdit={checkEdit}
+          newList={newList}
+          getPage={getPage}
         />
         <ModalComponent
           handlePostItem={handlePostItem}

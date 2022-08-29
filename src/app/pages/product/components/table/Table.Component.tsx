@@ -1,21 +1,23 @@
 import { ITables } from '../../models/table.interface';
-import TableTemplate from './Table.Template';
+import TableTemplate from './table.template';
 
 function TableComponent({
-  listData,
   handleRemove,
   getItem,
   handleOpen,
   checkEdit,
+  newList,
+  getPage,
 }: ITables) {
   return (
     <div>
       <TableTemplate
         getItem={getItem}
         handleRemove={handleRemove}
-        listData={listData}
         handleOpen={handleOpen}
         checkEdit={checkEdit}
+        newList={newList}
+        getPage={getPage}
       />
     </div>
   );

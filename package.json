@@ -20,6 +20,7 @@
     "@types/node": "^16.11.49",
     "@types/react": "^18.0.17",
     "@types/react-dom": "^18.0.6",
+    "@types/react-fontawesome": "^1.6.5",
     "axios": "^0.27.2",
     "date-fns": "^2.29.2",
     "dayjs": "^1.11.5",

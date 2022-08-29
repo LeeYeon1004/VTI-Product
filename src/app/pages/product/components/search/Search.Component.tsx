@@ -1,9 +1,15 @@
-import SearchTemplate from './Search.Template';
+import SearchTemplate from './search.template';
 
-function SearchComponent() {
+function SearchComponent({
+  getValue,
+  handleSearch,
+}: {
+  getValue: (data: string) => void;
+  handleSearch: () => void;
+}) {
   return (
     <div>
-      <SearchTemplate />
+      <SearchTemplate handleSearch={handleSearch} getValue={getValue} />
     </div>
   );
 }

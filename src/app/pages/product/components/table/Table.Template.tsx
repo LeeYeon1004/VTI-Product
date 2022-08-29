@@ -1,8 +1,9 @@
+import { faSort } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import {
   Button,
-  Pagination,
   Table,
   TableBody,
   TableCell,
@@ -12,13 +13,15 @@ import {
 } from '@mui/material';
 import moment from 'moment';
 import { ITables } from '../../models/table.interface';
+import PaginationPage from '../pagination/pagination.teamplate';
 
 function TableTemplate({
-  listData,
   handleRemove,
   getItem,
   handleOpen,
   checkEdit,
+  newList,
+  getPage,
 }: ITables) {
   return (
     <div className=" flex m-auto flex-col">
@@ -32,7 +35,12 @@ function TableTemplate({
               <TableCell sx={{ fontSize: '15px', fontWeight: '600' }}>
                 Name
               </TableCell>
-              <TableCell sx={{ fontSize: '15px', fontWeight: '600' }}>
+              <TableCell
+                sx={{ fontSize: '15px', fontWeight: '600', display: 'flex' }}
+              >
+                <div className="mr-[8px] hover:text-[gray] cursor-pointer">
+                  <FontAwesomeIcon icon={faSort} />
+                </div>
                 Price
               </TableCell>
               <TableCell sx={{ fontSize: '15px', fontWeight: '600' }}>
@@ -47,7 +55,7 @@ function TableTemplate({
             </TableRow>
           </TableHead>
           <TableBody>
-            {listData.map((item, index) => (
+            {newList.map((item, index) => (
               <TableRow key={index}>
                 <TableCell>{index + 1}</TableCell>
                 <TableCell>{item.name}</TableCell>
@@ -85,7 +93,7 @@ function TableTemplate({
         </Table>
       </TableContainer>
       <div className="flex justify-end mr-[16px] mt-[16px]">
-        <Pagination count={10} color="primary" />
+        <PaginationPage getPage={getPage} />
       </div>
     </div>
   );

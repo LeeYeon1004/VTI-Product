@@ -1,5 +1,5 @@
 import { RouteObject } from 'react-router-dom';
-import ProductComponent from './components/product/Product.Component';
+import ProductComponent from './components/product/product.component';
 
 export const productRouting: RouteObject[] = [
   {
