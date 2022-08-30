@@ -9,23 +9,6 @@ function ModalComponent({
   check,
   handleEdit,
 }: IModal) {
-  // const formik = useFormik({
-  //   initialValues: {
-  //     name: "",
-  //     price: 0,
-  //     mfg: "",
-  //     brand: ""
-  //   },
-  //   validationSchema: Yup.object({
-  //     name: Yup.string()
-  //       .min(2, "Mininum 2 characters")
-  //       .max(15, "Maximum 15 characters")
-  //       .required("Required!"),
-  //     price: Yup.number().required("Required!"),
-  //     mfg: Yup.string().required("Required!"),
-  //     brand: Yup.string().required("Required!")
-  //   })
-  // });
   return (
     <div>
       <ModalTemplate

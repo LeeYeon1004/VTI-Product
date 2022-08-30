@@ -20,23 +20,29 @@ function ProductTemplate({
   check,
   handleEdit,
 }: Props) {
+  console.log(listData);
   const [valueSearch, setValueSearch] = useState<string>('');
   const getValue = (value: string) => {
     setValueSearch(value);
   };
   const [newList, setNewList] = useState(listData.slice(0, 5));
   const [numberPage, setNumberPage] = useState(1);
+  const [fromValue, setFromValue] = useState<Date | null>(null);
+  const [toValue, setToValue] = useState<Date | null>(null);
   useEffect(() => {
-    const lim = 5;
+    const lim = 6;
+    const start = (numberPage - 1) * lim;
+    const end = start + lim;
     if (numberPage === 1) {
-      setNewList(listData.slice(0, 5));
+      setNewList(listData.slice(0, 6));
     } else {
-      setNewList(listData.slice(numberPage + 1, numberPage + 1 + lim));
+      setNewList(listData.slice(start, end));
     }
   }, [listData, numberPage]);
   const getPage = (page: number) => {
     setNumberPage(page);
   };
+  // search
   const handleSearch = () => {
     setNewList(
       newList.filter((item) => item.name?.toLowerCase().includes(valueSearch)),
@@ -46,6 +52,27 @@ function ProductTemplate({
   //   newList.sort((a, b) => b.price - a.price);
   // };
   // getPrice();
+  // from value
+  const getFromValue = (from: Date | null) => {
+    setFromValue(from);
+  };
+  const getToValue = (to: Date | null) => {
+    setToValue(to);
+  };
+  const dateValue = () => {
+    setNewList(
+      newList.filter((item: any) => {
+        if (fromValue && toValue) {
+          return (
+            new Date(item.mfg).getTime() >= fromValue.getTime() &&
+            new Date(item.mfg).getTime() <= toValue.getTime()
+          );
+        }
+        return item;
+      }),
+    );
+    console.log('de');
+  };
   return (
     <div className="">
       <div className="max-w-[1200px] m-auto">
@@ -63,7 +90,11 @@ function ProductTemplate({
               Add
             </Button>
           </div>
-          <DatePickerF />
+          <DatePickerF
+            dateValue={dateValue}
+            getFromValue={getFromValue}
+            getToValue={getToValue}
+          />
         </div>
         <TableComponent
           getItem={getItem}

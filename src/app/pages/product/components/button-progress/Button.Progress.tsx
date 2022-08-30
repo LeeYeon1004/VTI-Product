@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
 import { blue } from '@mui/material/colors';
 import Button from '@mui/material/Button';
-function ButtonProgress({ handleOnClick }: { handleOnClick: () => void }) {
+function ButtonProgress() {
   const [loading, setLoading] = React.useState(false);
   const [success, setSuccess] = React.useState(false);
   const timer = React.useRef<number>();
@@ -30,7 +30,7 @@ function ButtonProgress({ handleOnClick }: { handleOnClick: () => void }) {
       timer.current = window.setTimeout(() => {
         setSuccess(true);
         setLoading(false);
-      }, 2000);
+      }, 1500);
     }
   };
   return (
@@ -43,7 +43,6 @@ function ButtonProgress({ handleOnClick }: { handleOnClick: () => void }) {
           disabled={loading}
           onClick={() => {
             handleButtonClick();
-            handleOnClick();
           }}
         >
           Add
