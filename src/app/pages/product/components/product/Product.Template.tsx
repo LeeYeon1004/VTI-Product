@@ -20,7 +20,7 @@ function ProductTemplate({
   check,
   handleEdit,
 }: Props) {
-  console.log(listData);
+  // console.log(listData);
   const [valueSearch, setValueSearch] = useState<string>('');
   const getValue = (value: string) => {
     setValueSearch(value);
@@ -71,7 +71,6 @@ function ProductTemplate({
         return item;
       }),
     );
-    console.log('de');
   };
   return (
     <div className="">

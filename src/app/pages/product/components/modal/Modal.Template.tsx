@@ -77,13 +77,14 @@ function ModalTemplate({
   //   setMfgEvent(e);
   // };
   // formik
-  console.log(sendItem);
+
   const formik = useFormik({
+    enableReinitialize: true,
     initialValues: {
-      name: '',
-      price: 0,
-      mfg: '',
-      brand: '',
+      name: check ? sendItem?.name : '',
+      price: check ? sendItem?.price : 0,
+      mfg: check ? sendItem?.mfg : '',
+      brand: check ? sendItem?.brand : '',
     },
     validationSchema: Yup.object({
       name: Yup.string()

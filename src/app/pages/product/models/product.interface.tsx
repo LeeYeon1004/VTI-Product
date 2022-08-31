@@ -1,9 +1,9 @@
 export interface Product {
   id?: number;
-  name: string;
-  price: number;
-  mfg: string;
-  brand: string;
+  name?: string;
+  price?: number;
+  mfg?: string;
+  brand?: string;
 }
 export interface Props {
   handleOpen: () => void;

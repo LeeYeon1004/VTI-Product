@@ -13,15 +13,19 @@ function SearchTemplate({
   const clickSearch = () => {
     handleSearch();
     setValue('');
+    // const e = event || window.event;
+    // e.preventDefault();
   };
   const handleKey = (e: { key: string }) => {
     if (e.key === 'Enter') {
       clickSearch();
     }
   };
+  console.log('reload');
+
   return (
     <div className="">
-      <div className="my-[12px] flex">
+      <div className="mt-[12px] mb-[8px] flex">
         <TextField
           sx={{ width: '300px' }}
           size="small"
@@ -32,13 +36,19 @@ function SearchTemplate({
           onChange={(e) => setValue(e.target.value.toLowerCase())}
           onKeyDown={handleKey}
         />
-        <Button
-          sx={{ marginLeft: '8px', backgroundColor: '#0d6efd' }}
-          variant="contained"
-          onClick={clickSearch}
-        >
-          Search
-        </Button>
+        <div className="group">
+          <Button
+            sx={{ marginLeft: '8px', backgroundColor: '#0d6efd' }}
+            variant="contained"
+            onClick={clickSearch}
+            type="submit"
+          >
+            Search
+          </Button>
+          <div className="mb-[12px] hidden group-focus:block">
+            Kết quả tìm kiếm cho: "{value}"
+          </div>
+        </div>
       </div>
     </div>
   );
