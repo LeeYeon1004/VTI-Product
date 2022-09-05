@@ -4,25 +4,23 @@ import { useState } from 'react';
 function SearchTemplate({
   getValue,
   handleSearch,
+  handleAction,
 }: {
   getValue: (data: string) => void;
   handleSearch: () => void;
+  handleAction: () => void;
 }) {
   const [value, setValue] = useState<string>('');
   getValue(value);
   const clickSearch = () => {
     handleSearch();
     setValue('');
-    // const e = event || window.event;
-    // e.preventDefault();
   };
   const handleKey = (e: { key: string }) => {
     if (e.key === 'Enter') {
       clickSearch();
     }
   };
-  console.log('reload');
-
   return (
     <div className="">
       <div className="mt-[12px] mb-[8px] flex">
@@ -36,18 +34,18 @@ function SearchTemplate({
           onChange={(e) => setValue(e.target.value.toLowerCase())}
           onKeyDown={handleKey}
         />
-        <div className="group">
+        <div className="">
           <Button
             sx={{ marginLeft: '8px', backgroundColor: '#0d6efd' }}
             variant="contained"
-            onClick={clickSearch}
+            onClick={() => {
+              clickSearch();
+              handleAction();
+            }}
             type="submit"
           >
             Search
           </Button>
-          <div className="mb-[12px] hidden group-focus:block">
-            Kết quả tìm kiếm cho: "{value}"
-          </div>
         </div>
       </div>
     </div>
